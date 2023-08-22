@@ -1,0 +1,11 @@
+@mixin flexPositioning(
+  $justify: center,
+  $align: center,
+  $wrap: wrap,
+  $direction: row
+) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-flow: $direction $wrap;
+}
