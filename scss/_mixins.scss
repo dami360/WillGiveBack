@@ -2,10 +2,12 @@
   $justify: center,
   $align: center,
   $wrap: wrap,
-  $direction: row
+  $direction: row,
+  $gap: 0
 ) {
   display: flex;
   justify-content: $justify;
   align-items: $align;
   flex-flow: $direction $wrap;
+  gap: $gap;
 }
