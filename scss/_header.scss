@@ -13,16 +13,16 @@ header {
   transition: height 0.5s, font-size 0.5s;
 
   .logo {
-    font-size: 36px;
+    font-size: 38px;
     font-family: $font-title;
     transition-duration: inherit;
   }
 
   &[data-active="true"] {
-    height: 30px;
+    height: 35px;
 
     .logo {
-      font-size: 24px;
+      font-size: 25px;
     }
   }
 }
