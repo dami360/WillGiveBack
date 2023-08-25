@@ -1,5 +1,5 @@
 {
-  "name": "ll-give-back",
+  "name": "willgiveback",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -13,8 +13,6 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
     "sass": "^1.66.1",
     "vitest": "^0.34.3"
   }
