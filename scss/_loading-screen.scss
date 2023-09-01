@@ -1,0 +1,73 @@
+#loading-screen {
+  @include flexPositioning;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 110;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: $bg;
+  transition: opacity 0.5s;
+
+  span {
+    position: absolute;
+    width: 20px;
+    aspect-ratio: 1 / 1;
+    background-color: $main2;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #000;
+    transform: rotate(45deg);
+
+    &:first-of-type {
+      animation: loadingSpan 3s ease-in-out infinite backwards;
+    }
+
+    &:last-of-type {
+      animation: loadingSpan2 3s ease-in-out infinite backwards;
+    }
+  }
+}
+
+@keyframes loadingSpan {
+  0% {
+    transform: translateY(-30px) rotate(-45deg);
+  }
+
+  25% {
+    transform: translateX(30px) rotate(-45deg);
+  }
+
+  50% {
+    transform: translateY(30px) rotate(-45deg);
+  }
+
+  75% {
+    transform: translateX(-30px) rotate(-45deg);
+  }
+
+  100% {
+    transform: translateY(-30px) rotate(-45deg);
+  }
+}
+
+@keyframes loadingSpan2 {
+  0% {
+    transform: translateY(30px) rotate(-45deg);
+  }
+
+  25% {
+    transform: translateX(-30px) rotate(-45deg);
+  }
+
+  50% {
+    transform: translateY(-30px) rotate(-45deg);
+  }
+
+  75% {
+    transform: translateX(30px) rotate(-45deg);
+  }
+
+  100% {
+    transform: translateY(30px) rotate(-45deg);
+  }
+}

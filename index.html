@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="/icon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/icon.ico" type="image/x-icon" />
     <title>WillGiveBack</title>
     <script
       src="https://kit.fontawesome.com/35a2acffbf.js"
@@ -11,10 +11,16 @@
     ></script>
   </head>
   <body>
+    <div id="loading-screen"><span></span><span></span><span></span></div>
     <nav data-hide="false">
-      <a href="#" class="menu-toggle" tabindex="1" title="Hide menu"><i class="fa-solid fa-angle-down" style="transform: translateY(2px);"></i></a>
-      <a href="#" tabindex="2"><i class="fa-solid fa-user"></i></i></a>
-      <a href="#" tabindex="3"><i class="fa-solid fa-magnifying-glass"></i></i></a>
+      <a href="#" id="menu-toggle" tabindex="1" title="Hide menu"
+        ><i
+          class="fa-solid fa-angle-down"
+          style="transform: translateY(2px)"
+        ></i
+      ></a>
+      <a href="#" tabindex="2"><i class="fa-solid fa-user"></i></a>
+      <a href="#" tabindex="3"><i class="fa-solid fa-magnifying-glass"></i></a>
       <a href="#" tabindex="4"><i class="fa-solid fa-address-book"></i></a>
       <a href="#" tabindex="5"><i class="fa-solid fa-circle-info"></i></a>
     </nav>
@@ -23,6 +29,7 @@
         <section class="logo">'ll give back</section>
       </header>
     </a>
+    <main id="conteiner"></main>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
