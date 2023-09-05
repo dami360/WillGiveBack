@@ -6,8 +6,6 @@ import ContentPage from "./js/content";
 
 const apiAddress = "localhost:8000";
 
-window.onload = () => {
-  setTimeout(() => {
-    LoadingScreen.hide();
-  }, 1000);
+window.onload = async () => {
+  ContentPage.newSession(apiAddress).then(LoadingScreen.hide());
 };

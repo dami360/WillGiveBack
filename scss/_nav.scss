@@ -2,12 +2,11 @@ nav {
   @include flexPositioning(center, center, nowrap, column);
   position: fixed;
   bottom: 50%;
-  right: 0;
+  right: 20px;
   z-index: 99;
-  margin-right: 20px;
   padding: 5px;
   border-radius: 50px;
-  box-shadow: 0px 0px 4px $main2, 0px 0px 10px #000;
+  box-shadow: 0px 0px 4px $main, 0px 0px 10px #000;
   background-color: $bg;
   transform: translateY(50%);
   transition: bottom 1s cubic-bezier(0.87, -1, 0.27, 2),
@@ -20,7 +19,7 @@ nav {
     margin: 10px;
     border-radius: 50%;
     background-color: $bg;
-    color: $main2;
+    color: $main;
     font-size: 25px;
     transition: margin 0.3s, width 0.3s, background-color 0.2s, color 0.2s;
     outline: none;
@@ -29,7 +28,7 @@ nav {
     &:focus-visible {
       margin: 5px;
       width: 45px;
-      background-color: $main2;
+      background-color: $main;
       color: $bg;
     }
   }

@@ -1,0 +1,12 @@
+{
+  "_id": "ObjectId",
+  "name": "string",
+  "login": "string",
+  "password": "string",
+  "friends": {
+    "id": "name"
+  },
+  "groups": {
+    "id": "name"
+  }
+}

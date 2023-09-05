@@ -1,4 +1,77 @@
 main {
-  width: 100dvw;
+  width: 100%;
   height: 100%;
+  padding: 20px;
+
+  form {
+    @include flexPositioning(center, center, nowrap, column, 20px);
+    width: 100%;
+    height: 100%;
+    font-size: 1.2rem;
+
+    section {
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      color: $text;
+
+      input {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        outline: none;
+        transition: box-shadow 0.2s;
+      }
+
+      &.data {
+        grid-template-columns: 1fr 3fr;
+        gap: 10px;
+        padding: 30px;
+        box-shadow: $shadow-main;
+
+        input {
+          box-shadow: 0 0 2px $main;
+          background-color: transparent;
+          color: $text;
+          font-size: 1.2rem;
+        }
+
+        label {
+          text-align: right;
+        }
+
+        input {
+          &:focus {
+            box-shadow: 0 0 5px $bg;
+          }
+        }
+      }
+
+      &.buttons {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+
+        input {
+          &[type="submit"],
+          &[type="button"] {
+            background-color: $bg;
+            color: $main;
+            font-size: 1.1rem;
+            text-decoration: underline;
+            text-decoration-color: $bg;
+            transition: text-decoration-color 0.1s, text-underline-offset 0.1s;
+            text-underline-offset: 0;
+            cursor: pointer;
+
+            &:hover,
+            &:focus {
+              text-underline-offset: 10px;
+              text-decoration-color: $main;
+            }
+          }
+        }
+      }
+    }
+  }
 }

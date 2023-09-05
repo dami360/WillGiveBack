@@ -16,14 +16,25 @@
   display: none;
 }
 
+html,
 body {
+  height: 100%;
+}
+
+body {
+  @include flexPositioning;
+  min-height: 100dvh;
   background-color: $bg;
   color: $text;
-  min-height: 1000px;
   padding-top: 65px;
+  font-family: $font-main;
 }
 
 a {
   text-decoration: none;
   color: unset;
+}
+
+input {
+  font-family: $font-main;
 }
