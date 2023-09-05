@@ -1,116 +1,113 @@
 import LoadingScreen from "./loadingScreen";
 const conteiner = document.querySelector("#conteiner");
 
+function createForm(action, method) {
+  const form = document.createElement("form");
+  form.action = action;
+  form.method = method;
+
+  return form;
+}
+
+function createSection(...classes) {
+  const section = document.createElement("section");
+  section.classList.add(...classes);
+
+  return section;
+}
+
+function createLabel(target, inner) {
+  const label = document.createElement("label");
+  label.setAttribute("for", target);
+  label.innerHTML = inner;
+
+  return label;
+}
+
+function createInput(type, name, id, maxL) {
+  const input = document.createElement("input");
+  input.type = type;
+  input.name = name;
+  input.id = id;
+
+  if ((type === "text" || type === "password") && maxL) {
+    input.maxLength = maxL;
+    input.placeholder = `Max lenght: ${maxL}`;
+  }
+
+  return input;
+}
+
+function createButton(value, callback) {
+  const button = document.createElement("input");
+  button.type = "button";
+  button.value = value;
+  button.onclick = callback;
+
+  return button;
+}
+
 export default class ContentPage {
   // pages --------------------------------------------------
   static signInPage() {
-    const formSignIn = document.createElement("form");
-    formSignIn.action = "return false";
-    formSignIn.method = "post";
+    const formSignIn = createForm("return false", "post");
 
-    const section1 = document.createElement("section");
-    section1.classList.add("data");
+    const section1 = createSection("data");
     formSignIn.appendChild(section1);
 
-    const section2 = document.createElement("section");
-    section2.classList.add("buttons");
+    const section2 = createSection("buttons");
     formSignIn.appendChild(section2);
 
-    const labelLogin = document.createElement("label");
-    labelLogin.setAttribute("for", "login");
-    labelLogin.innerText = "Login: ";
-    section1.appendChild(labelLogin);
+    section1.appendChild(createLabel("login", "Login: "));
+    section1.appendChild(createInput("text", "login", "login"));
 
-    const inputLogin = document.createElement("input");
-    inputLogin.type = "text";
-    inputLogin.name = "login";
-    inputLogin.id = "login";
-    section1.appendChild(inputLogin);
+    section1.appendChild(createLabel("pass", "Password: "));
+    section1.appendChild(createInput("password", "pass", "pass"));
 
-    const labelPassword = document.createElement("label");
-    labelPassword.setAttribute("for", "password");
-    labelPassword.innerText = "Password: ";
-    section1.appendChild(labelPassword);
+    section2.appendChild(
+      createButton("Sign Up", () => {
+        LoadingScreen.show();
+        setTimeout(() => {
+          conteiner.replaceChildren(this.signUpPage());
+          LoadingScreen.hide();
+        }, 1000);
+      })
+    );
 
-    const inputPassword = document.createElement("input");
-    inputPassword.type = "password";
-    inputPassword.name = "pass";
-    inputPassword.id = "password";
-    section1.appendChild(inputPassword);
-
-    const buttonSignUp = document.createElement("input");
-    buttonSignUp.type = "button";
-    buttonSignUp.value = "Sign Up";
-    buttonSignUp.onclick = () => {
-      LoadingScreen.show();
-      setTimeout(() => {
-        conteiner.replaceChildren(this.signUpPage());
-        LoadingScreen.hide();
-      }, 1000);
-    };
-    section2.appendChild(buttonSignUp);
-
-    const buttonSignIn = document.createElement("input");
-    buttonSignIn.type = "button";
-    buttonSignIn.value = "Sign In";
-    buttonSignIn.onclick = () => {};
-    section2.appendChild(buttonSignIn);
+    section2.appendChild(createButton("Sign In", () => {}));
 
     return formSignIn;
   }
 
   static signUpPage() {
-    const formSignUp = document.createElement("form");
-    formSignUp.action = "return false";
-    formSignUp.method = "post";
+    const formSignUp = createForm("return false", "post");
 
-    const section1 = document.createElement("section");
-    section1.classList.add("data");
+    const section1 = createSection("data");
     formSignUp.appendChild(section1);
 
-    const section2 = document.createElement("section");
-    section2.classList.add("buttons");
+    const section2 = createSection("buttons");
     formSignUp.appendChild(section2);
 
-    const labelLogin = document.createElement("label");
-    labelLogin.setAttribute("for", "login");
-    labelLogin.innerText = "Login: ";
-    section1.appendChild(labelLogin);
+    section1.appendChild(createLabel("login", "Login: "));
+    section1.appendChild(createInput("text", "login", "login", 15));
 
-    const inputLogin = document.createElement("input");
-    inputLogin.type = "text";
-    inputLogin.name = "login";
-    inputLogin.id = "login";
-    section1.appendChild(inputLogin);
+    section1.appendChild(createLabel("email", "Email: "));
+    section1.appendChild(createInput("email", "email", "email"));
 
-    const labelPassword = document.createElement("label");
-    labelPassword.setAttribute("for", "password");
-    labelPassword.innerText = "Password: ";
-    section1.appendChild(labelPassword);
+    section1.appendChild(createLabel("pass", "Password: "));
+    section1.appendChild(createInput("password", "pass", "pass", 12));
 
-    const inputPassword = document.createElement("input");
-    inputPassword.type = "password";
-    inputPassword.name = "pass";
-    inputPassword.id = "password";
-    section1.appendChild(inputPassword);
+    section2.appendChild(
+      createButton("Sign In", () => {
+        LoadingScreen.show();
+        setTimeout(() => {
+          conteiner.replaceChildren(this.signInPage());
+          LoadingScreen.hide();
+        }, 1000);
+      })
+    );
 
-    const buttonSignIn = document.createElement("input");
-    buttonSignIn.type = "button";
-    buttonSignIn.value = "Sign In";
-    buttonSignIn.onclick = () => {
-      LoadingScreen.show();
-      setTimeout(() => {
-        conteiner.replaceChildren(this.signInPage());
-        LoadingScreen.hide();
-      }, 1000);
-    };
-    section2.appendChild(buttonSignIn);
-
-    const buttonSignUp = document.createElement("input");
-    buttonSignUp.type = "button";
-    buttonSignUp.value = "Sign Up";
-    buttonSignUp.onclick = () => {};
-    section2.appendChild(buttonSignUp);
+    section2.appendChild(createButton("Sign Up", () => {}));
 
     return formSignUp;
   }
