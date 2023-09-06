@@ -1,113 +1,91 @@
 import LoadingScreen from "./loadingScreen";
+import CreateNodeElement from "./createNodeElements";
 const conteiner = document.querySelector("#conteiner");
-
-function createForm(action, method) {
-  const form = document.createElement("form");
-  form.action = action;
-  form.method = method;
-
-  return form;
-}
-
-function createSection(...classes) {
-  const section = document.createElement("section");
-  section.classList.add(...classes);
-
-  return section;
-}
-
-function createLabel(target, inner) {
-  const label = document.createElement("label");
-  label.setAttribute("for", target);
-  label.innerHTML = inner;
-
-  return label;
-}
-
-function createInput(type, name, id, maxL) {
-  const input = document.createElement("input");
-  input.type = type;
-  input.name = name;
-  input.id = id;
-
-  if ((type === "text" || type === "password") && maxL) {
-    input.maxLength = maxL;
-    input.placeholder = `Max lenght: ${maxL}`;
-  }
-
-  return input;
-}
-
-function createButton(value, callback) {
-  const button = document.createElement("input");
-  button.type = "button";
-  button.value = value;
-  button.onclick = callback;
-
-  return button;
-}
 
 export default class ContentPage {
   // pages --------------------------------------------------
-  static signInPage() {
-    const formSignIn = createForm("return false", "post");
+  static signInPage(lgn) {
+    const formSignIn = CreateNodeElement.Form("return false", "post");
 
-    const section1 = createSection("data");
+    const section1 = CreateNodeElement.Section("data");
     formSignIn.appendChild(section1);
 
-    const section2 = createSection("buttons");
+    const section2 = CreateNodeElement.Section("buttons");
     formSignIn.appendChild(section2);
 
-    section1.appendChild(createLabel("login", "Login: "));
-    section1.appendChild(createInput("text", "login", "login"));
+    section1.appendChild(CreateNodeElement.Label("login", "Login: "));
+    const login = CreateNodeElement.Input("text", "login", "login");
+    if (lgn !== "" && lgn) {
+      login.value = lgn;
+    }
+    section1.appendChild(login);
 
-    section1.appendChild(createLabel("pass", "Password: "));
-    section1.appendChild(createInput("password", "pass", "pass"));
+    section1.appendChild(CreateNodeElement.Label("pass", "Password: "));
+    const password = CreateNodeElement.Input("password", "pass", "pass");
+    section1.appendChild(password);
 
     section2.appendChild(
-      createButton("Sign Up", () => {
-        LoadingScreen.show();
-        setTimeout(() => {
-          conteiner.replaceChildren(this.signUpPage());
+      CreateNodeElement.Button("Sign Up", () => {
+        LoadingScreen.showWithDelay(() => {
+          conteiner.replaceChildren(this.signUpPage(login.value));
           LoadingScreen.hide();
-        }, 1000);
+        });
       })
     );
 
-    section2.appendChild(createButton("Sign In", () => {}));
+    section2.appendChild(
+      CreateNodeElement.Button("Sign In", async () => {
+        this.signIn(login.value, password.value);
+      })
+    );
 
     return formSignIn;
   }
 
-  static signUpPage() {
-    const formSignUp = createForm("return false", "post");
+  static signUpPage(lgn) {
+    const formSignUp = CreateNodeElement.Form("return false", "post");
 
-    const section1 = createSection("data");
+    const section1 = CreateNodeElement.Section("data");
     formSignUp.appendChild(section1);
 
-    const section2 = createSection("buttons");
+    const section2 = CreateNodeElement.Section("buttons");
     formSignUp.appendChild(section2);
 
-    section1.appendChild(createLabel("login", "Login: "));
-    section1.appendChild(createInput("text", "login", "login", 15));
+    section1.appendChild(CreateNodeElement.Label("login", "Login: "));
+    const login = CreateNodeElement.Input("text", "login", "login", 15);
+    if (lgn !== "" && lgn) {
+      login.value = lgn;
+    }
+    section1.appendChild(login);
 
-    section1.appendChild(createLabel("email", "Email: "));
-    section1.appendChild(createInput("email", "email", "email"));
+    section1.appendChild(CreateNodeElement.Label("email", "Email: "));
+    const email = CreateNodeElement.Input("email", "email", "email");
+    section1.appendChild(email);
 
-    section1.appendChild(createLabel("pass", "Password: "));
-    section1.appendChild(createInput("password", "pass", "pass", 12));
+    section1.appendChild(CreateNodeElement.Label("pass", "Password: "));
+    const password = CreateNodeElement.Input("password", "pass", "pass", 12);
+    section1.appendChild(password);
+
+    section1.appendChild(
+      CreateNodeElement.Label("rpass", "Reapeat password: ")
+    );
+    const rpassword = CreateNodeElement.Input("password", "rpass", "rpass");
+    section1.appendChild(rpassword);
 
     section2.appendChild(
-      createButton("Sign In", () => {
-        LoadingScreen.show();
-        setTimeout(() => {
-          conteiner.replaceChildren(this.signInPage());
+      CreateNodeElement.Button("Sign In", () => {
+        LoadingScreen.showWithDelay(() => {
+          conteiner.replaceChildren(this.signInPage(login.value));
           LoadingScreen.hide();
-        }, 1000);
+        });
       })
     );
 
-    section2.appendChild(createButton("Sign Up", () => {}));
+    section2.appendChild(
+      CreateNodeElement.Button("Sign Up", () => {
+        this.signUp(login.value, email.value, password.value, rpassword.value);
+      })
+    );
 
     return formSignUp;
   }
@@ -121,12 +99,12 @@ export default class ContentPage {
   // -------------------------------------------------------
 
   // button functions --------------------------------------
-  static signIn() {
-    return ``;
+  static signIn(login, password) {
+    console.log(login, password);
   }
 
-  static signUp() {
-    return ``;
+  static signUp(login, email, password, rpassword) {
+    console.log(login, email, password, rpassword);
   }
   // -------------------------------------------------------
 }
