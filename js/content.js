@@ -1,5 +1,6 @@
 import LoadingScreen from "./loadingScreen";
 import CreateNodeElement from "./createNodeElements";
+import ServerConnection from "./serverConnection";
 const conteiner = document.querySelector("#conteiner");
 
 export default class ContentPage {
@@ -39,7 +40,7 @@ export default class ContentPage {
       })
     );
 
-    return formSignIn;
+    conteiner.replaceChildren(formSignIn);
   }
 
   static signUpPage(lgn) {
@@ -87,24 +88,31 @@ export default class ContentPage {
       })
     );
 
-    return formSignUp;
+    conteiner.replaceChildren(formSignUp);
   }
+
+  static profilePage(apiResponse) {}
   // -------------------------------------------------------
 
   // change page functions ---------------------------------
-  static newSession(apiAddress) {
-    conteiner.appendChild(this.signInPage());
-    LoadingScreen.hide();
+  static async newSession() {
+    const res = await ServerConnection.isLogged();
+    if (res.err) {
+      this.signInPage();
+      LoadingScreen.hide();
+
+      return;
+    }
+
+    this.profilePage(res);
+
+    return;
   }
   // -------------------------------------------------------
 
   // button functions --------------------------------------
-  static signIn(login, password) {
-    console.log(login, password);
-  }
+  static signIn(login, password) {}
 
-  static signUp(login, email, password, rpassword) {
-    console.log(login, email, password, rpassword);
-  }
+  static signUp(login, email, password, rpassword) {}
   // -------------------------------------------------------
 }
