@@ -5,8 +5,14 @@ const conteiner = document.querySelector("#conteiner");
 
 export default class ContentPage {
   // pages --------------------------------------------------
-  static signInPage(lgn) {
-    const formSignIn = CreateNodeElement.Form("return false", "post");
+  static signInPage(lgn, notFound) {
+    const formSignIn = CreateNodeElement.Form("", "post");
+
+    if (notFound) {
+      formSignIn.appendChild(
+        CreateNodeElement.AlertNote("Wrong login or password")
+      );
+    }
 
     const section1 = CreateNodeElement.Section("data");
     formSignIn.appendChild(section1);
@@ -28,23 +34,29 @@ export default class ContentPage {
     section2.appendChild(
       CreateNodeElement.Button("Sign Up", () => {
         LoadingScreen.showWithDelay(() => {
-          conteiner.replaceChildren(this.signUpPage(login.value));
+          this.signUpPage(login.value);
           LoadingScreen.hide();
         });
       })
     );
 
     section2.appendChild(
-      CreateNodeElement.Button("Sign In", async () => {
-        this.signIn(login.value, password.value);
-      })
+      CreateNodeElement.Button(
+        "Sign In",
+        async (e) => {
+          e.preventDefault();
+
+          this.signIn(login.value, password.value);
+        },
+        true
+      )
     );
 
     conteiner.replaceChildren(formSignIn);
   }
 
   static signUpPage(lgn) {
-    const formSignUp = CreateNodeElement.Form("return false", "post");
+    const formSignUp = CreateNodeElement.Form("", "post");
 
     const section1 = CreateNodeElement.Section("data");
     formSignUp.appendChild(section1);
@@ -76,16 +88,27 @@ export default class ContentPage {
     section2.appendChild(
       CreateNodeElement.Button("Sign In", () => {
         LoadingScreen.showWithDelay(() => {
-          conteiner.replaceChildren(this.signInPage(login.value));
+          this.signInPage(login.value);
           LoadingScreen.hide();
         });
       })
     );
 
     section2.appendChild(
-      CreateNodeElement.Button("Sign Up", () => {
-        this.signUp(login.value, email.value, password.value, rpassword.value);
-      })
+      CreateNodeElement.Button(
+        "Sign Up",
+        (e) => {
+          e.preventDefault();
+
+          this.signUp(
+            login.value,
+            email.value,
+            password.value,
+            rpassword.value
+          );
+        },
+        true
+      )
     );
 
     conteiner.replaceChildren(formSignUp);
@@ -97,6 +120,7 @@ export default class ContentPage {
   // change page functions ---------------------------------
   static async newSession() {
     const res = await ServerConnection.isLogged();
+
     if (res.err) {
       this.signInPage();
       LoadingScreen.hide();
@@ -105,14 +129,31 @@ export default class ContentPage {
     }
 
     this.profilePage(res);
+    LoadingScreen.hide();
 
     return;
   }
-  // -------------------------------------------------------
 
-  // button functions --------------------------------------
-  static signIn(login, password) {}
+  static async signIn(login, password) {
+    LoadingScreen.showWithDelay(async () => {
+      const res = await ServerConnection.signIn(login, password);
 
-  static signUp(login, email, password, rpassword) {}
+      if (res.err) {
+        this.signInPage(login, true);
+        LoadingScreen.hide();
+
+        return;
+      }
+
+      this.profilePage(res);
+      LoadingScreen.hide();
+
+      return;
+    });
+  }
+
+  static signUp(login, email, password, rpassword) {
+    console.log("signup");
+  }
   // -------------------------------------------------------
 }

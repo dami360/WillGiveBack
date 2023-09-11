@@ -36,12 +36,20 @@ export default class CreateNodeElement {
     return input;
   }
 
-  static Button(value, callback) {
+  static Button(value, callback, isSubmit) {
     const button = document.createElement("input");
-    button.type = "button";
+    button.type = isSubmit ? "submit" : "button";
     button.value = value;
     button.onclick = callback;
 
     return button;
+  }
+
+  static AlertNote(value) {
+    const p = document.createElement("p");
+    p.classList.add("alert");
+    p.innerText = value;
+
+    return p;
   }
 }
