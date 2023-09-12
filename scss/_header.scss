@@ -19,6 +19,7 @@ header {
       font-size: 38px;
       font-family: $font-title;
       transition: font-size 0.5s;
+      user-select: none;
     }
   }
 

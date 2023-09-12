@@ -2,6 +2,7 @@ import LoadingScreen from "./loadingScreen";
 import CreateNodeElement from "./createNodeElements";
 import ServerConnection from "./serverConnection";
 const conteiner = document.querySelector("#conteiner");
+const nav = document.querySelector("#main-nav");
 
 export default class ContentPage {
   // pages --------------------------------------------------
@@ -31,6 +32,14 @@ export default class ContentPage {
     const password = CreateNodeElement.Input("password", "pass", "pass");
     section1.appendChild(password);
 
+    const stayLogged = CreateNodeElement.Input(
+      "checkbox",
+      "stay-logged",
+      "stay-logged"
+    );
+    section1.appendChild(stayLogged);
+    section1.appendChild(CreateNodeElement.Label("stay-logged", "Stay logged"));
+
     section2.appendChild(
       CreateNodeElement.Button("Sign Up", () => {
         LoadingScreen.showWithDelay(() => {
@@ -46,7 +55,7 @@ export default class ContentPage {
         async (e) => {
           e.preventDefault();
 
-          this.signIn(login.value, password.value);
+          this.signIn(login.value, password.value, stayLogged.checked);
         },
         true
       )
@@ -128,15 +137,17 @@ export default class ContentPage {
       return;
     }
 
+    sessionStorage.setItem("dt", JSON.stringify(res));
     this.profilePage(res);
+    nav.setAttribute("data-active", "true");
     LoadingScreen.hide();
 
     return;
   }
 
-  static async signIn(login, password) {
+  static async signIn(login, password, stayLogged) {
     LoadingScreen.showWithDelay(async () => {
-      const res = await ServerConnection.signIn(login, password);
+      const res = await ServerConnection.signIn(login, password, stayLogged);
 
       if (res.err) {
         this.signInPage(login, true);
@@ -145,7 +156,9 @@ export default class ContentPage {
         return;
       }
 
+      sessionStorage.setItem("dt", JSON.stringify(res));
       this.profilePage(res);
+      nav.setAttribute("data-active", "true");
       LoadingScreen.hide();
 
       return;

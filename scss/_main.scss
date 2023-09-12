@@ -18,6 +18,7 @@ main {
     }
 
     section {
+      position: relative;
       display: grid;
       justify-content: center;
       align-items: center;
@@ -43,10 +44,35 @@ main {
           background-color: transparent;
           color: $text;
           font-size: 1.2rem;
+
+          &[type="checkbox"] {
+            box-shadow: none;
+            visibility: hidden;
+
+            + label {
+              margin-left: auto;
+              margin-right: 0;
+              width: fit-content;
+              padding: 5px 10px;
+              border-radius: 10px;
+              box-shadow: none;
+              font-size: 0.8em;
+              text-align: center;
+              transition: color 0.2s, background-color 0.2s;
+            }
+
+            &:checked {
+              + label {
+                color: $bg;
+                background-color: $main;
+              }
+            }
+          }
         }
 
         label {
           text-align: right;
+          user-select: none;
         }
 
         input {
@@ -68,8 +94,8 @@ main {
             font-size: 1.1rem;
             text-decoration: underline;
             text-decoration-color: $bg;
-            transition: text-decoration-color 0.1s, text-underline-offset 0.1s;
             text-underline-offset: 0;
+            transition: text-decoration-color 0.1s, text-underline-offset 0.1s;
             cursor: pointer;
 
             &:hover,

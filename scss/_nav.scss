@@ -37,4 +37,8 @@ nav {
     bottom: 63px;
     transform: translateY(100%);
   }
+
+  &[data-active="false"] {
+    display: none;
+  }
 }
