@@ -22,15 +22,22 @@ export default class CreateNodeElement {
     return label;
   }
 
-  static Input(type, name, id, maxL) {
+  static Input(type, name, id, lenght) {
     const input = document.createElement("input");
     input.type = type;
     input.name = name;
     input.id = id;
 
-    if ((type === "text" || type === "password") && maxL) {
-      input.maxLength = maxL;
-      input.placeholder = `Max lenght: ${maxL}`;
+    if ((type === "text" || type === "password") && lenght) {
+      if (lenght > 0) {
+        input.maxLength = lenght;
+        input.placeholder = `Max lenght: ${lenght}`;
+      }
+      if (lenght < 0) {
+        lenght *= -1;
+        input.minLength = lenght;
+        input.placeholder = `Min lenght: ${lenght}`;
+      }
     }
 
     return input;
@@ -45,10 +52,11 @@ export default class CreateNodeElement {
     return button;
   }
 
-  static AlertNote(value) {
+  static AlertNote(value, bg) {
     const p = document.createElement("p");
     p.classList.add("alert");
     p.innerText = value;
+    p.style.backgroundColor = bg;
 
     return p;
   }

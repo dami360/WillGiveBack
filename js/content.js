@@ -6,12 +6,22 @@ const nav = document.querySelector("#main-nav");
 
 export default class ContentPage {
   // pages --------------------------------------------------
-  static signInPage(lgn, notFound) {
+  static signInPage(lgn, notFound, signUpped) {
     const formSignIn = CreateNodeElement.Form("", "post");
 
     if (notFound) {
       formSignIn.appendChild(
-        CreateNodeElement.AlertNote("Wrong login or password")
+        CreateNodeElement.AlertNote(
+          "Wrong login or password",
+          "rgba(255, 0, 0, 0.3)"
+        )
+      );
+    } else if (signUpped) {
+      formSignIn.appendChild(
+        CreateNodeElement.AlertNote(
+          "Account registered",
+          "rgba(0, 255, 0, 0.3)"
+        )
       );
     }
 
@@ -64,8 +74,14 @@ export default class ContentPage {
     conteiner.replaceChildren(formSignIn);
   }
 
-  static signUpPage(lgn) {
+  static signUpPage(lgn, errMessege) {
     const formSignUp = CreateNodeElement.Form("", "post");
+
+    if (errMessege) {
+      formSignUp.appendChild(
+        CreateNodeElement.AlertNote(errMessege, "rgba(255, 0, 0, 0.3)")
+      );
+    }
 
     const section1 = CreateNodeElement.Section("data");
     formSignUp.appendChild(section1);
@@ -85,7 +101,7 @@ export default class ContentPage {
     section1.appendChild(email);
 
     section1.appendChild(CreateNodeElement.Label("pass", "Password: "));
-    const password = CreateNodeElement.Input("password", "pass", "pass", 12);
+    const password = CreateNodeElement.Input("password", "pass", "pass", -8);
     section1.appendChild(password);
 
     section1.appendChild(
@@ -146,11 +162,15 @@ export default class ContentPage {
   }
 
   static async signIn(login, password, stayLogged) {
+    if (!login || !password) {
+      return;
+    }
+
     LoadingScreen.showWithDelay(async () => {
       const res = await ServerConnection.signIn(login, password, stayLogged);
 
       if (res.err) {
-        this.signInPage(login, true);
+        this.signInPage(login, true, false);
         LoadingScreen.hide();
 
         return;
@@ -166,7 +186,30 @@ export default class ContentPage {
   }
 
   static signUp(login, email, password, rpassword) {
-    console.log("signup");
+    if (!login || !email || !password || !rpassword) {
+      return;
+    }
+
+    LoadingScreen.showWithDelay(async () => {
+      const res = await ServerConnection.signUp(
+        login,
+        email,
+        password,
+        rpassword
+      );
+
+      if (res.errMess) {
+        this.signUpPage(login, res.errMess);
+        LoadingScreen.hide();
+
+        return;
+      }
+
+      this.signInPage("", false, true);
+      LoadingScreen.hide();
+
+      return;
+    });
   }
   // -------------------------------------------------------
 }
