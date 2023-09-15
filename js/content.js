@@ -6,23 +6,11 @@ const nav = document.querySelector("#main-nav");
 
 export default class ContentPage {
   // pages --------------------------------------------------
-  static signInPage(lgn, notFound, signUpped) {
+  static signInPage(lgn, alert, alertColor) {
     const formSignIn = CreateNodeElement.Form("", "post");
 
-    if (notFound) {
-      formSignIn.appendChild(
-        CreateNodeElement.AlertNote(
-          "Wrong login or password",
-          "rgba(255, 0, 0, 0.3)"
-        )
-      );
-    } else if (signUpped) {
-      formSignIn.appendChild(
-        CreateNodeElement.AlertNote(
-          "Account registered",
-          "rgba(0, 255, 0, 0.3)"
-        )
-      );
+    if (alert) {
+      formSignIn.appendChild(CreateNodeElement.AlertNote(alert, alertColor));
     }
 
     const section1 = CreateNodeElement.Section("data");
@@ -170,7 +158,18 @@ export default class ContentPage {
       const res = await ServerConnection.signIn(login, password, stayLogged);
 
       if (res.err) {
-        this.signInPage(login, true, false);
+        this.signInPage(
+          login,
+          "Wrong login or password",
+          "rgba(255, 0, 0, 0.3)"
+        );
+        LoadingScreen.hide();
+
+        return;
+      }
+
+      if (res.errMess) {
+        this.signInPage(login, res.errMess, "rgba(255, 0, 0, 0.3)");
         LoadingScreen.hide();
 
         return;
@@ -205,7 +204,7 @@ export default class ContentPage {
         return;
       }
 
-      this.signInPage("", false, true);
+      this.signInPage("", "Account registered", "rgba(0, 255, 0, 0.3)");
       LoadingScreen.hide();
 
       return;
