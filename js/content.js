@@ -13,32 +13,34 @@ export default class ContentPage {
       formSignIn.appendChild(CreateNodeElement.AlertNote(alert, alertColor));
     }
 
-    const section1 = CreateNodeElement.Section("data");
-    formSignIn.appendChild(section1);
+    const inputSection = CreateNodeElement.Section("data");
+    formSignIn.appendChild(inputSection);
 
-    const section2 = CreateNodeElement.Section("buttons");
-    formSignIn.appendChild(section2);
+    const buttonSection = CreateNodeElement.Section("buttons");
+    formSignIn.appendChild(buttonSection);
 
-    section1.appendChild(CreateNodeElement.Label("login", "Login: "));
+    inputSection.appendChild(CreateNodeElement.Label("login", "Login: "));
     const login = CreateNodeElement.Input("text", "login", "login");
     if (lgn !== "" && lgn) {
       login.value = lgn;
     }
-    section1.appendChild(login);
+    inputSection.appendChild(login);
 
-    section1.appendChild(CreateNodeElement.Label("pass", "Password: "));
+    inputSection.appendChild(CreateNodeElement.Label("pass", "Password: "));
     const password = CreateNodeElement.Input("password", "pass", "pass");
-    section1.appendChild(password);
+    inputSection.appendChild(password);
 
     const stayLogged = CreateNodeElement.Input(
       "checkbox",
       "stay-logged",
       "stay-logged"
     );
-    section1.appendChild(stayLogged);
-    section1.appendChild(CreateNodeElement.Label("stay-logged", "Stay logged"));
+    inputSection.appendChild(stayLogged);
+    inputSection.appendChild(
+      CreateNodeElement.Label("stay-logged", "Stay logged")
+    );
 
-    section2.appendChild(
+    buttonSection.appendChild(
       CreateNodeElement.Button("Sign Up", () => {
         LoadingScreen.showWithDelay(() => {
           this.signUpPage(login.value);
@@ -47,7 +49,7 @@ export default class ContentPage {
       })
     );
 
-    section2.appendChild(
+    buttonSection.appendChild(
       CreateNodeElement.Button(
         "Sign In",
         async (e) => {
@@ -71,34 +73,34 @@ export default class ContentPage {
       );
     }
 
-    const section1 = CreateNodeElement.Section("data");
-    formSignUp.appendChild(section1);
+    const inputSection = CreateNodeElement.Section("data");
+    formSignUp.appendChild(inputSection);
 
-    const section2 = CreateNodeElement.Section("buttons");
-    formSignUp.appendChild(section2);
+    const buttonSection = CreateNodeElement.Section("buttons");
+    formSignUp.appendChild(buttonSection);
 
-    section1.appendChild(CreateNodeElement.Label("login", "Login: "));
+    inputSection.appendChild(CreateNodeElement.Label("login", "Login: "));
     const login = CreateNodeElement.Input("text", "login", "login", 15);
     if (lgn !== "" && lgn) {
       login.value = lgn;
     }
-    section1.appendChild(login);
+    inputSection.appendChild(login);
 
-    section1.appendChild(CreateNodeElement.Label("email", "Email: "));
+    inputSection.appendChild(CreateNodeElement.Label("email", "Email: "));
     const email = CreateNodeElement.Input("email", "email", "email");
-    section1.appendChild(email);
+    inputSection.appendChild(email);
 
-    section1.appendChild(CreateNodeElement.Label("pass", "Password: "));
+    inputSection.appendChild(CreateNodeElement.Label("pass", "Password: "));
     const password = CreateNodeElement.Input("password", "pass", "pass", -8);
-    section1.appendChild(password);
+    inputSection.appendChild(password);
 
-    section1.appendChild(
+    inputSection.appendChild(
       CreateNodeElement.Label("rpass", "Reapeat password: ")
     );
     const rpassword = CreateNodeElement.Input("password", "rpass", "rpass");
-    section1.appendChild(rpassword);
+    inputSection.appendChild(rpassword);
 
-    section2.appendChild(
+    buttonSection.appendChild(
       CreateNodeElement.Button("Sign In", () => {
         LoadingScreen.showWithDelay(() => {
           this.signInPage(login.value);
@@ -107,7 +109,7 @@ export default class ContentPage {
       })
     );
 
-    section2.appendChild(
+    buttonSection.appendChild(
       CreateNodeElement.Button(
         "Sign Up",
         (e) => {
@@ -127,7 +129,24 @@ export default class ContentPage {
     conteiner.replaceChildren(formSignUp);
   }
 
-  static profilePage(apiResponse) {}
+  static profilePage(apiResponse) {
+    const profile = CreateNodeElement.Section("profile");
+
+    profile.appendChild(CreateNodeElement.Header(2, apiResponse.login));
+    profile.appendChild(document.createElement("hr"));
+
+    const friendsSection = CreateNodeElement.Section("friends");
+    profile.appendChild(friendsSection);
+
+    const groupsSection = CreateNodeElement.Section("groups");
+    profile.appendChild(groupsSection);
+
+    friendsSection.appendChild(CreateNodeElement.Header(3, "Friends"));
+
+    groupsSection.appendChild(CreateNodeElement.Header(3, "Groups"));
+
+    conteiner.replaceChildren(profile);
+  }
   // -------------------------------------------------------
 
   // change page functions ---------------------------------

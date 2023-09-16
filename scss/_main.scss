@@ -3,6 +3,23 @@ main {
   height: 100%;
   padding: 20px;
 
+  section {
+    &.profile {
+      h2 {
+        text-align: center;
+      }
+
+      hr {
+        border: 1px solid #ffffff22;
+        margin-bottom: 15px;
+      }
+
+      p {
+        padding: 5px 10px;
+      }
+    }
+  }
+
   form {
     @include flexPositioning(center, center, nowrap, column, 20px);
     width: 100%;

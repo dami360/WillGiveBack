@@ -1,10 +1,16 @@
 export default class CreateNodeElement {
-  static Form(action, method) {
-    const form = document.createElement("form");
-    form.action = action;
-    form.method = method;
+  static Header(level, inner) {
+    const header = document.createElement(`h${level}`);
+    header.innerText = inner;
 
-    return form;
+    return header;
+  }
+
+  static Paragraph(inner) {
+    const p = document.createElement("p");
+    p.innerText = inner;
+
+    return p;
   }
 
   static Section(...classes) {
@@ -12,6 +18,14 @@ export default class CreateNodeElement {
     section.classList.add(...classes);
 
     return section;
+  }
+
+  static Form(action, method) {
+    const form = document.createElement("form");
+    form.action = action;
+    form.method = method;
+
+    return form;
   }
 
   static Label(target, inner) {
@@ -52,10 +66,10 @@ export default class CreateNodeElement {
     return button;
   }
 
-  static AlertNote(value, bg) {
+  static AlertNote(inner, bg) {
     const p = document.createElement("p");
     p.classList.add("alert");
-    p.innerText = value;
+    p.innerText = inner;
     p.style.backgroundColor = bg;
 
     return p;
