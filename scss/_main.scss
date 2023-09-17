@@ -63,7 +63,7 @@ main {
 
           &[type="checkbox"] {
             box-shadow: none;
-            visibility: hidden;
+            width: 0;
 
             + label {
               margin-left: auto;
@@ -74,7 +74,7 @@ main {
               box-shadow: 0 0 2px $main;
               font-size: 0.8em;
               text-align: center;
-              transition: color 0.2s, background-color 0.2s;
+              transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
               cursor: pointer;
             }
 
@@ -82,6 +82,18 @@ main {
               + label {
                 color: $bg;
                 background-color: $main;
+              }
+
+              &:focus {
+                + label {
+                  box-shadow: 0 0 0px 2px $main;
+                }
+              }
+            }
+
+            &:focus {
+              + label {
+                box-shadow: none;
               }
             }
           }

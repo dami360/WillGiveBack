@@ -35,6 +35,7 @@ export default class ContentPage {
       "stay-logged",
       "stay-logged"
     );
+    stayLogged.tabIndex = 0;
     inputSection.appendChild(stayLogged);
     inputSection.appendChild(
       CreateNodeElement.Label("stay-logged", "Stay logged")
@@ -153,8 +154,16 @@ export default class ContentPage {
   static async newSession() {
     const res = await ServerConnection.isLogged();
 
-    if (res.err) {
+    if (res.err && !sessionStorage.getItem("dt")) {
       this.signInPage();
+      LoadingScreen.hide();
+
+      return;
+    }
+
+    if (sessionStorage.getItem("dt")) {
+      this.profilePage(JSON.parse(sessionStorage.getItem("dt")));
+      nav.setAttribute("data-active", "true");
       LoadingScreen.hide();
 
       return;
@@ -203,7 +212,7 @@ export default class ContentPage {
     });
   }
 
-  static signUp(login, email, password, rpassword) {
+  static async signUp(login, email, password, rpassword) {
     if (!login || !email || !password || !rpassword) {
       return;
     }
