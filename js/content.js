@@ -182,6 +182,8 @@ export default class ContentPage {
       return;
     }
 
+    login = login.trim();
+
     LoadingScreen.showWithDelay(async () => {
       const res = await ServerConnection.signIn(login, password, stayLogged);
 
@@ -216,6 +218,9 @@ export default class ContentPage {
     if (!login || !email || !password || !rpassword) {
       return;
     }
+
+    login = login.trim();
+    email = email.trim();
 
     LoadingScreen.showWithDelay(async () => {
       const res = await ServerConnection.signUp(
