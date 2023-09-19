@@ -130,23 +130,26 @@ export default class ContentPage {
     conteiner.replaceChildren(formSignUp);
   }
 
-  static profilePage(apiResponse) {
+  static profilePage(userData) {
+    if (!userData) {
+      userData = JSON.parse(sessionStorage.getItem("dt"));
+    }
+
     const profile = CreateNodeElement.Section("profile");
 
-    profile.appendChild(CreateNodeElement.Header(2, apiResponse.login));
+    profile.appendChild(CreateNodeElement.Header(2, userData.login));
     profile.appendChild(document.createElement("hr"));
 
-    const friendsSection = CreateNodeElement.Section("friends");
-    profile.appendChild(friendsSection);
-
-    const groupsSection = CreateNodeElement.Section("groups");
-    profile.appendChild(groupsSection);
-
-    friendsSection.appendChild(CreateNodeElement.Header(3, "Friends"));
-
-    groupsSection.appendChild(CreateNodeElement.Header(3, "Groups"));
-
     conteiner.replaceChildren(profile);
+  }
+
+  static infoPage() {
+    const info = CreateNodeElement.Section("info");
+
+    info.appendChild(CreateNodeElement.Header(2, "Info"));
+    info.appendChild(document.createElement("hr"));
+
+    conteiner.replaceChildren(info);
   }
   // -------------------------------------------------------
 
@@ -162,15 +165,12 @@ export default class ContentPage {
     }
 
     if (sessionStorage.getItem("dt")) {
-      this.profilePage(JSON.parse(sessionStorage.getItem("dt")));
-      nav.setAttribute("data-active", "true");
-      LoadingScreen.hide();
-
-      return;
+      this.profilePage();
+    } else {
+      sessionStorage.setItem("dt", JSON.stringify(res));
+      this.profilePage(res);
     }
 
-    sessionStorage.setItem("dt", JSON.stringify(res));
-    this.profilePage(res);
     nav.setAttribute("data-active", "true");
     LoadingScreen.hide();
 

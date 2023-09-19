@@ -4,19 +4,23 @@ main {
   padding: 20px;
 
   section {
+    h2 {
+      text-align: center;
+    }
+
+    hr {
+      border: 1px solid #ffffff22;
+      margin-bottom: 15px;
+    }
+
+    p {
+      padding: 5px 10px;
+    }
+
     &.profile {
-      h2 {
-        text-align: center;
-      }
+    }
 
-      hr {
-        border: 1px solid #ffffff22;
-        margin-bottom: 15px;
-      }
-
-      p {
-        padding: 5px 10px;
-      }
+    &.info {
     }
   }
 
