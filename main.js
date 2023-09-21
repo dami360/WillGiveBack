@@ -25,6 +25,10 @@ menuBottons.forEach((button) => {
           ContentPage.infoPage();
           break;
 
+        case "log-out":
+          ContentPage.logOut();
+          break;
+
         default:
           ContentPage.profilePage();
           break;

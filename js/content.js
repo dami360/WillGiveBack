@@ -4,6 +4,17 @@ import ServerConnection from "./serverConnection";
 const conteiner = document.querySelector("#conteiner");
 const nav = document.querySelector("#main-nav");
 
+function getCookie(cookieName) {
+  let cookie = {};
+
+  document.cookie.split(";").forEach((el) => {
+    let [key, value] = el.split("=");
+    cookie[key.trim()] = value;
+  });
+
+  return cookie[cookieName];
+}
+
 export default class ContentPage {
   // pages --------------------------------------------------
   static signInPage(lgn, alert, alertColor) {
@@ -242,6 +253,21 @@ export default class ContentPage {
 
       return;
     });
+  }
+
+  static logOut() {
+    nav.setAttribute("data-active", "false");
+
+    sessionStorage.removeItem("dt");
+
+    document.cookie = `${getCookie(
+      "l"
+    )}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+    document.cookie = `l=;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+
+    this.signInPage();
+
+    return;
   }
   // -------------------------------------------------------
 }
