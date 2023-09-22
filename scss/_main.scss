@@ -23,8 +23,16 @@ main {
     &.info {
       a {
         display: block;
-        margin: 20px 10px;
+        width: fit-content;
+        margin: 30px 10px;
+        font-size: 1.2rem;
         text-decoration: underline;
+        text-underline-offset: 4px;
+        transition-duration: 0.1s;
+
+        &:hover {
+          text-underline-offset: 10px;
+        }
       }
     }
   }

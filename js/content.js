@@ -162,6 +162,14 @@ export default class ContentPage {
 
     info.appendChild(
       CreateNodeElement.Link(
+        "https://www.privacypolicygenerator.info/live.php?token=7EEcHwdH8QhEQgqS0rsLJTyVhftkrsnd",
+        "Privacy Policy",
+        "Privacy Policy"
+      )
+    );
+
+    info.appendChild(
+      CreateNodeElement.Link(
         "https://www.cookiepolicygenerator.com/live.php?token=lL2nI0C2zBFu0XF1ge3ux3gSZZiAQHpo",
         "Cookies Policy",
         "Cookies Policy"
