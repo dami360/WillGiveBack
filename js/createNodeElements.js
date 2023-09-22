@@ -13,6 +13,23 @@ export default class CreateNodeElement {
     return p;
   }
 
+  static ParagraphWithHTML(inner) {
+    const p = document.createElement("p");
+    p.innerHTML = inner;
+
+    return p;
+  }
+
+  static Link(href, inner, title) {
+    const a = document.createElement("a");
+    a.href = href;
+    a.innerText = inner;
+    a.title = title;
+    a.target = "_blank";
+
+    return a;
+  }
+
   static Section(...classes) {
     const section = document.createElement("section");
     section.classList.add(...classes);

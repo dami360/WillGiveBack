@@ -160,6 +160,14 @@ export default class ContentPage {
     info.appendChild(CreateNodeElement.Header(2, "Info"));
     info.appendChild(document.createElement("hr"));
 
+    info.appendChild(
+      CreateNodeElement.Link(
+        "https://www.cookiepolicygenerator.com/live.php?token=lL2nI0C2zBFu0XF1ge3ux3gSZZiAQHpo",
+        "Cookies Policy",
+        "Cookies Policy"
+      )
+    );
+
     conteiner.replaceChildren(info);
   }
   // -------------------------------------------------------
@@ -176,10 +184,10 @@ export default class ContentPage {
     }
 
     if (sessionStorage.getItem("dt")) {
-      this.profilePage();
+      this.infoPage();
     } else {
       sessionStorage.setItem("dt", JSON.stringify(res));
-      this.profilePage(res);
+      this.infoPage(res);
     }
 
     nav.setAttribute("data-active", "true");
@@ -248,7 +256,11 @@ export default class ContentPage {
         return;
       }
 
-      this.signInPage("", "Account registered", "rgba(0, 255, 0, 0.3)");
+      this.signInPage(
+        "",
+        "Account registered, check your email for a verification link",
+        "rgba(0, 255, 0, 0.3)"
+      );
       LoadingScreen.hide();
 
       return;
