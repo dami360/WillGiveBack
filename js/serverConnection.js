@@ -86,7 +86,24 @@ export default class ServerConnection {
         return res.data;
       });
 
-    console.log(response);
+    return response;
+  }
+
+  static async findUsersByLogin(loginsRegex) {
+    const response = await axios(`${apiAddress}/api/accounts/find`, {
+      method: "post",
+      data: {
+        search: loginsRegex,
+      },
+      withCredentials: true,
+    })
+      .catch((error) => {
+        return { err: error };
+      })
+      .then((res) => {
+        return res.data;
+      });
+
     return response;
   }
 }

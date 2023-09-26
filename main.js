@@ -21,6 +21,10 @@ menuBottons.forEach((button) => {
           ContentPage.profilePage();
           break;
 
+        case "search":
+          ContentPage.searchPage();
+          break;
+
         case "info":
           ContentPage.infoPage();
           break;

@@ -154,6 +154,37 @@ export default class ContentPage {
     conteiner.replaceChildren(profile);
   }
 
+  static searchPage() {
+    const search = CreateNodeElement.Section("search");
+
+    const loginsInput = CreateNodeElement.Input("text", "logins", "logins");
+    const resultSection = CreateNodeElement.Section("results");
+
+    search.appendChild(loginsInput);
+    search.appendChild(resultSection);
+
+    loginsInput.oninput = async (el) => {
+      if (el.target.value === "") {
+        resultSection.innerText = "";
+
+        return;
+      }
+
+      const res = await ServerConnection.findUsersByLogin(el.target.value);
+      console.log(res);
+
+      if (!res || res.err) {
+        resultSection.innerText = "No users";
+
+        return;
+      }
+
+      resultSection.innerText = res;
+    };
+
+    conteiner.replaceChildren(search);
+  }
+
   static infoPage() {
     const info = CreateNodeElement.Section("info");
 
@@ -192,10 +223,10 @@ export default class ContentPage {
     }
 
     if (sessionStorage.getItem("dt")) {
-      this.infoPage();
+      this.searchPage();
     } else {
       sessionStorage.setItem("dt", JSON.stringify(res));
-      this.infoPage(res);
+      this.searchPage(res);
     }
 
     nav.setAttribute("data-active", "true");
