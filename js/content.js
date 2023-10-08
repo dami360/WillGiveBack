@@ -67,7 +67,7 @@ export default class ContentPage {
         async (e) => {
           e.preventDefault();
 
-          this.signIn(login.value, password.value, stayLogged.checked);
+          await this.signIn(login.value, password.value, stayLogged.checked);
         },
         true
       )
@@ -128,11 +128,15 @@ export default class ContentPage {
           e.preventDefault();
 
           this.signUp(
-            login.value,
-            email.value,
-            password.value,
-            rpassword.value
-          );
+              login.value,
+              email.value,
+              password.value,
+              rpassword.value
+          ).then(r => {
+            if (r){
+              console.log(r)
+            }
+          });
         },
         true
       )
@@ -231,8 +235,6 @@ export default class ContentPage {
 
     nav.setAttribute("data-active", "true");
     LoadingScreen.hide();
-
-    return;
   }
 
   static async signIn(login, password, stayLogged) {
@@ -267,8 +269,6 @@ export default class ContentPage {
       this.profilePage(res);
       nav.setAttribute("data-active", "true");
       LoadingScreen.hide();
-
-      return;
     });
   }
 
@@ -301,8 +301,6 @@ export default class ContentPage {
         "rgba(0, 255, 0, 0.3)"
       );
       LoadingScreen.hide();
-
-      return;
     });
   }
 
@@ -317,8 +315,6 @@ export default class ContentPage {
     document.cookie = `l=;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
 
     this.signInPage();
-
-    return;
   }
   // -------------------------------------------------------
 }

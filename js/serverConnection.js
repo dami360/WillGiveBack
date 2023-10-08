@@ -1,5 +1,6 @@
 import axios from "axios";
-const apiAddress = "http://localhost:8000";
+// const apiAddress = "http://localhost:8000";
+const apiAddress = "https://willgiveback.onrender.com";
 
 export default class ServerConnection {
   static async signUp(login, email, password, rpassword) {
